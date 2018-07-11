@@ -24,6 +24,17 @@
         <activity
             android:name=".bottomNavActivity"
             android:label="@string/title_activity_bottom_nav"></activity>
+
+
+        <provider
+            android:name="android.support.v4.content.FileProvider"
+            android:authorities="codepath.kaughlinpractice.kaughlin_insta"
+            android:exported="false"
+            android:grantUriPermissions="true" >
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/fileprovider" />
+        </provider>
     </application>
 
 </manifest>
