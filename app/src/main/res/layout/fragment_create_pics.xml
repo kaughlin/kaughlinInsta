@@ -22,18 +22,35 @@
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true"
-            android:layout_marginBottom="136dp"
-            android:text="take a photo"/>
+            android:layout_marginBottom="112dp"
+            android:text="take a photo" />
 
         <ImageView
             android:id="@+id/ivUserPic"
             android:layout_width="301dp"
             android:layout_height="225dp"
-            android:layout_alignParentStart="true"
             android:layout_alignParentTop="true"
-            android:layout_marginStart="53dp"
-            android:layout_marginTop="132dp"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="58dp"
             android:src="@android:color/background_dark" />
+
+        <EditText
+            android:id="@+id/etDescription"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="232dp"
+            android:ems="10"
+            android:inputType="textPersonName" />
+
+        <Button
+            android:id="@+id/btnPost"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@+id/btnCamButton"
+            android:layout_centerHorizontal="true"
+            android:text="post" />
     </RelativeLayout>
 
 </FrameLayout>
