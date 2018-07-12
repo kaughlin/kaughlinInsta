@@ -48,6 +48,7 @@ public class LoginActivity extends AppCompatActivity {
                 //gets refrence to what user types in
                 final String username = usernameInput.getText().toString();
                 final String password = passwordInput.getText().toString();
+                
                 signUp(username, password);
             }
         });

@@ -17,6 +17,32 @@
             android:layout_height="wrap_content"
             android:text="Logout" />
 
+        <Button
+            android:id="@+id/btnTakeProfilePic"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="112dp"
+            android:text="take a Profile Pic" />
+
+        <ImageView
+            android:id="@+id/ivProfilePic"
+            android:layout_width="301dp"
+            android:layout_height="225dp"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="58dp"
+            android:src="@android:color/background_dark" />
+        <Button
+            android:id="@+id/btnUploadProfilePic"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="112dp"
+            android:text="Upload" />
+
     </RelativeLayout>
 
 </FrameLayout>

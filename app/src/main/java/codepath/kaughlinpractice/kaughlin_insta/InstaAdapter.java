@@ -38,7 +38,9 @@ public class InstaAdapter extends RecyclerView.Adapter<InstaAdapter.ViewHolder> 
         // get the data according to position
         final Post post = mPosts.get(position);
         holder.tvUsername.setText(post.getUser().getUsername());
+        holder.tvUsername2.setText(post.getUser().getUsername());
         holder.tvDescription.setText(post.getDescription());
+
         //holder.ivPostImage.setText(post.getDescription());
         holder.tvTweetTime.setText(post.getRelativeTimeAgo());
         //holder.tvHandle.setText("@" +tweet.handle); // display tweet handle
@@ -47,6 +49,13 @@ public class InstaAdapter extends RecyclerView.Adapter<InstaAdapter.ViewHolder> 
                 .load(post.getImage().getUrl())
                 .into(holder.ivPostImage);
                 //.transform(new RoundedCornersTransformation(75,0 ))
+        if(post.getUser().getParseFile("profile") != null) {
+            GlideApp.with(context)
+                    .load(post.getUser().getParseFile("profile").getUrl())
+                    .circleCrop()
+                    .into(holder.ivProfilePic);
+        }
+
 
 
     }
@@ -60,7 +69,9 @@ public class InstaAdapter extends RecyclerView.Adapter<InstaAdapter.ViewHolder> 
 
         //public ImageView ivProfileImage;
         public ImageView ivPostImage;
+        public ImageView ivProfilePic;
         public TextView tvUsername;
+        public TextView tvUsername2;
         public TextView tvDescription;
         public TextView tvTweetTime;
 
@@ -68,7 +79,9 @@ public class InstaAdapter extends RecyclerView.Adapter<InstaAdapter.ViewHolder> 
             super(itemView);
             //ivProfileImage = (ImageView) itemView.findViewById(R.id.ivProfileImage);
             ivPostImage = (ImageView) itemView.findViewById(R.id.ivPostImage);
+            ivProfilePic = (ImageView) itemView.findViewById(R.id.ivProfilePic);
             tvUsername = (TextView) itemView.findViewById(R.id.tvUserName);
+            tvUsername2 = (TextView) itemView.findViewById(R.id.tvUserName2);
             tvDescription = (TextView) itemView.findViewById(R.id.tvDescription);
             tvTweetTime = (TextView) itemView.findViewById(R.id.tvTime);
 

@@ -26,6 +26,7 @@ import com.parse.ParseUser;
 import com.parse.SaveCallback;
 
 import java.io.File;
+import java.util.ArrayList;
 
 import codepath.kaughlinpractice.kaughlin_insta.R;
 import codepath.kaughlinpractice.kaughlin_insta.model.Post;
@@ -161,6 +162,8 @@ public class createPics extends Fragment {
         newPost.setDescription(description);
         newPost.setImage(imageFile);
         newPost.setUser(user);
+        // allows each post to have an array list
+        newPost.put("comments", new ArrayList<String>());// first is column name second new array list
 
         newPost.saveInBackground(new SaveCallback() {
             @Override
