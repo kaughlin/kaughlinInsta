@@ -3,6 +3,7 @@ package codepath.kaughlinpractice.kaughlin_insta;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -39,7 +40,7 @@ public class InstaAdapter extends RecyclerView.Adapter<InstaAdapter.ViewHolder> 
         holder.tvUsername.setText(post.getUser().getUsername());
         holder.tvDescription.setText(post.getDescription());
         //holder.ivPostImage.setText(post.getDescription());
-        //holder.tvTweetTime.setText(getRelativeTimeAgo(tweet.createdAt));
+        holder.tvTweetTime.setText(post.getRelativeTimeAgo());
         //holder.tvHandle.setText("@" +tweet.handle); // display tweet handle
 
         GlideApp.with(context)
@@ -61,7 +62,7 @@ public class InstaAdapter extends RecyclerView.Adapter<InstaAdapter.ViewHolder> 
         public ImageView ivPostImage;
         public TextView tvUsername;
         public TextView tvDescription;
-        //public TextView tvTweetTime;
+        public TextView tvTweetTime;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -69,9 +70,9 @@ public class InstaAdapter extends RecyclerView.Adapter<InstaAdapter.ViewHolder> 
             ivPostImage = (ImageView) itemView.findViewById(R.id.ivPostImage);
             tvUsername = (TextView) itemView.findViewById(R.id.tvUserName);
             tvDescription = (TextView) itemView.findViewById(R.id.tvDescription);
-            //tvTweetTime = (TextView) itemView.findViewById(R.id.tvTweetTime);
+            tvTweetTime = (TextView) itemView.findViewById(R.id.tvTime);
 
-            //itemView.setOnClickListener(this); idk what this does
+            itemView.setOnClickListener(this); //idk what this does
 
 
         }
@@ -81,56 +82,38 @@ public class InstaAdapter extends RecyclerView.Adapter<InstaAdapter.ViewHolder> 
         @Override
         public void onClick(View view) {
 
-           /*
+
             // gets item position
             int position = getAdapterPosition();
+            Log.d("InstaAdapter", "A post was clicked");
             // make sure the position is valid, i.e. actually exists in the view
             if (position != RecyclerView.NO_POSITION) {
                 // get the movie at the position, this won't work if the class is static
-                Tweet whotweet = mTweets.get(position);
-                // create intent for the new activity
-                Intent intent = new Intent(context, TwitterDetailActivity.class);//
-                // serialize the movie using parceler, use its short name as a key
-                intent.putExtra(Tweet.class.getSimpleName(), Parcels.wrap(whotweet));
+                Post post = mPosts.get(position);
+                // create bundle
+                Log.d("InstaAdapter", "Here's the ");
+                ((bottomNavActivity) context).openDetails(post);
 
-                // show the activity
-                context.startActivity(intent);
-           */
+
+            }
         }
     }
 
-    /* Within the RecyclerView.Adapter class */
+        /* Within the RecyclerView.Adapter class */
 
-    // Clean all elements of the recycler
-    public  void clear() {
-        mPosts.clear();
-        notifyDataSetChanged();
-    }
-
-    // Add a list of items -- change to type used
-    public void addAll(List<Post> list) {
-        mPosts.addAll(list);
-        notifyDataSetChanged();
-    }
-    /*
-    // getRelativeTimeAgo("Mon Apr 01 21:16:23 +0000 2014");
-    public String getRelativeTimeAgo(String rawJsonDate) {
-        String twitterFormat = "EEE MMM dd HH:mm:ss ZZZZZ yyyy";
-        SimpleDateFormat sf = new SimpleDateFormat(twitterFormat, Locale.ENGLISH);
-        sf.setLenient(true);
-
-        String relativeDate = "";
-        try {
-            long dateMillis = sf.parse(rawJsonDate).getTime();
-            relativeDate = DateUtils.getRelativeTimeSpanString(dateMillis,
-                    System.currentTimeMillis(), DateUtils.SECOND_IN_MILLIS).toString();
-        } catch (ParseException e) {
-            e.printStackTrace();
+        // Clean all elements of the recycler
+        public void clear() {
+            mPosts.clear();
+            notifyDataSetChanged();
         }
 
-        return relativeDate;
-    }
-    */
+        // Add a list of items -- change to type used
+        public void addAll(List<Post> list) {
+            mPosts.addAll(list);
+            notifyDataSetChanged();
+        }
 
 
-};
+
+
+}

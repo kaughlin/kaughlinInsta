@@ -1,5 +1,7 @@
 package codepath.kaughlinpractice.kaughlin_insta.model;
 
+import android.text.format.DateUtils;
+
 import com.parse.ParseClassName;
 import com.parse.ParseFile;
 import com.parse.ParseObject;
@@ -49,6 +51,12 @@ public class Post extends ParseObject{
             return this;
         }
 
+    }
+
+    public String getRelativeTimeAgo(){
+        long dateInMills = getCreatedAt().getTime();
+        String relativeDate = DateUtils.getRelativeTimeSpanString(dateInMills, System.currentTimeMillis(), DateUtils.SECOND_IN_MILLIS).toString();
+        return relativeDate;
     }
 
 }
