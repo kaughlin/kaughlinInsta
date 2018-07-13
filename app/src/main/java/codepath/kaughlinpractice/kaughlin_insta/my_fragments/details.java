@@ -36,6 +36,7 @@ public class details extends Fragment {
     public TextView tvPostTime;
     public TextView etComment;
     public Button btnSendComment;
+    public ImageView ivClickToComment;
     public RecyclerView comments;
     public CommentAdapter commentAdapter;
     public ArrayList<Object> commentList;
@@ -62,6 +63,7 @@ public class details extends Fragment {
         tvPostTime = (TextView) view.findViewById(R.id.tvTime);
         btnSendComment = (Button) view.findViewById(R.id.btnSendComment);
         etComment = (EditText) view.findViewById(R.id.etComment);
+        ivClickToComment = (ImageView) view.findViewById(R.id.ivComment);
 
         comments = (RecyclerView)  view.findViewById(R.id.rvComments);
 
@@ -88,6 +90,9 @@ public class details extends Fragment {
                     tvDescription.setText(post.getDescription());
                     tvPostTime.setText(post.getRelativeTimeAgo());
 
+                    etComment.setVisibility(View.GONE);
+                    btnSendComment.setVisibility(View.GONE);
+
 
                     GlideApp.with(getActivity())
                             .load(post.getImage().getUrl())
@@ -111,6 +116,17 @@ public class details extends Fragment {
                             post.saveInBackground();
                             //etComment.getText().clear();
                             etComment.setText("");
+                            etComment.setVisibility(View.GONE);
+                            btnSendComment.setVisibility(View.GONE);
+                        }
+                    });
+
+                    ivClickToComment.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+
+                            etComment.setVisibility(View.VISIBLE);
+                            btnSendComment.setVisibility(View.VISIBLE);
                         }
                     });
 

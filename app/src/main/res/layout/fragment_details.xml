@@ -54,6 +54,7 @@
             android:layout_below="@+id/ivPostImage"
             android:layout_toEndOf="@+id/ivLike"
             android:layout_marginLeft="15dp"
+            android:clickable="true"
             app:srcCompat="@drawable/ufi_comment" />
 
         <ImageView
