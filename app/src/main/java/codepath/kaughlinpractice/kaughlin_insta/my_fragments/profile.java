@@ -11,34 +11,57 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.FileProvider;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseFile;
 import com.parse.ParseUser;
 import com.parse.SaveCallback;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 
+import codepath.kaughlinpractice.kaughlin_insta.GlideApp;
+import codepath.kaughlinpractice.kaughlin_insta.InstaAdapter;
 import codepath.kaughlinpractice.kaughlin_insta.LoginActivity;
 import codepath.kaughlinpractice.kaughlin_insta.R;
+import codepath.kaughlinpractice.kaughlin_insta.model.Post;
 
 import static android.app.Activity.RESULT_OK;
 
 
 public class profile extends Fragment {
     Button btnLogout;
+    Button btnEditBio;
+    Button btnSendBio;
+    EditText etBio;
+    TextView tvBio;
     Button btnTakeProfilePic;
     ImageView ProfilePic;
+    ImageView actualProfilePic;
+    TextView tvNumOfPosts;
+    TextView tvuserName;
     Button uploadProfilePic;
+    Button btnEditProfile;
+
+    InstaAdapter instaAdapter;
+    ArrayList<Post> mPosts;
+    RecyclerView rvPosts;
 
     static final int REQUEST_IMAGE_CAPTURE = 1;
+    final ParseUser user = ParseUser.getCurrentUser();
 
     public final String APP_TAG = "MyCustomApp";
     public final static int CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE = 1034;
@@ -57,6 +80,72 @@ public class profile extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         btnLogout = view.findViewById(R.id.btnLogout);
+        actualProfilePic = view.findViewById(R.id.ivActualProfilePic);
+        tvNumOfPosts = view.findViewById(R.id.tvNumOfPosts);
+        tvuserName = view.findViewById(R.id.tvUserName);
+        btnEditProfile = view.findViewById(R.id.btnEditProfile);
+        btnTakeProfilePic = view.findViewById(R.id.btnTakeProfilePic);
+        ProfilePic = view.findViewById(R.id.ivProfilePic);
+        uploadProfilePic = view.findViewById(R.id.btnUploadProfilePic);
+        btnTakeProfilePic.setVisibility(View.INVISIBLE);
+        tvBio = view.findViewById(R.id.tvBio);
+
+        btnSendBio = view.findViewById(R.id.btnSendBio);
+        btnEditBio = view.findViewById(R.id.btnBio);
+        etBio = view.findViewById(R.id.etBio);
+        etBio.setVisibility(View.INVISIBLE);
+        btnSendBio.setVisibility(View.INVISIBLE);
+        btnEditBio.setVisibility(View.INVISIBLE);
+        if(user.getString("bio") != null) {
+            tvBio.setText(user.getString("bio"));
+
+        }
+
+        btnEditBio.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                btnEditBio.setVisibility(View.INVISIBLE);
+
+                etBio.setVisibility(View.VISIBLE);
+                btnSendBio.setVisibility(View.VISIBLE);
+                if(user.getString("bio") != null) {
+                    //tvBio.setText(user.getString("bio"));
+                    tvBio.setVisibility(View.INVISIBLE);
+                }
+
+            }
+        });
+
+        btnSendBio.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                etBio.setVisibility(View.INVISIBLE);
+                btnTakeProfilePic.setVisibility(View.INVISIBLE);
+                btnEditBio.setVisibility(View.INVISIBLE);
+                btnSendBio.setVisibility(View.INVISIBLE);
+                user.put("bio", etBio.getText().toString());//put it in the data base
+                tvBio.setText(etBio.getText().toString());
+                user.saveInBackground();
+                tvBio.setVisibility(View.VISIBLE);
+                Toast.makeText(getActivity(), "Bio Updated", Toast.LENGTH_LONG).show();
+            }
+        });
+
+
+        btnEditProfile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                btnTakeProfilePic.setVisibility(View.VISIBLE);
+                btnEditBio.setVisibility(View.VISIBLE);
+            }
+        });
+
+        if(user.getParseFile("profile") != null) {
+            GlideApp.with(getActivity())
+                    .load(user.getParseFile("profile").getUrl())
+                    .circleCrop()
+                    .into(actualProfilePic);
+        }
 
         btnLogout.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -68,12 +157,12 @@ public class profile extends Fragment {
             }
         });
 
-        btnTakeProfilePic = view.findViewById(R.id.btnTakeProfilePic);
 
 
-        ProfilePic = view.findViewById(R.id.ivProfilePic);
+
+
         ProfilePic.setVisibility(View.INVISIBLE);
-        uploadProfilePic = view.findViewById(R.id.btnUploadProfilePic);
+
         uploadProfilePic.setVisibility(View.INVISIBLE);
 
         btnTakeProfilePic.setOnClickListener(new View.OnClickListener() {
@@ -83,6 +172,21 @@ public class profile extends Fragment {
                 //final ParseFile image = (ParseFile) userPic.getParseFile("");
             }
         });
+
+
+        rvPosts = (RecyclerView) view.findViewById(R.id.rvProfilePosts);
+        //init the arraylist (data source)
+        mPosts = new ArrayList<>();
+        // construct the adapter from this datasource
+        instaAdapter = new InstaAdapter(mPosts);
+
+        //recyclerView setup (layout manager, user adapter)
+        rvPosts.setLayoutManager(new LinearLayoutManager(getActivity()));
+        // set the adapter
+        rvPosts.setAdapter(instaAdapter);
+        loadTopPosts();
+
+
 
     }
 
@@ -95,7 +199,7 @@ public class profile extends Fragment {
             Bitmap imageBitmap = (BitmapFactory.decodeFile(photoFile.getAbsolutePath()));
             ProfilePic.setImageBitmap(imageBitmap); // image that what just took post in on imageview i created on fragment
 
-            ProfilePic.setVisibility(View.VISIBLE);
+            ProfilePic.setVisibility(View.INVISIBLE);
             btnTakeProfilePic.setVisibility(View.INVISIBLE);
             uploadProfilePic.setVisibility(View.VISIBLE);
 
@@ -130,7 +234,6 @@ public class profile extends Fragment {
 
                     //TODO -- at intent to go back to home screen
 
-                    ProfilePic.setVisibility(View.INVISIBLE);
                     btnTakeProfilePic.setVisibility(View.VISIBLE);
                     uploadProfilePic.setVisibility(View.INVISIBLE);
                 }
@@ -172,6 +275,45 @@ public class profile extends Fragment {
         if (takePictureIntent.resolveActivity(profile.this.getActivity().getPackageManager()) != null) {
             startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
         }
+    }
+
+
+
+    private void loadTopPosts() {
+
+        final Post.Query postsQuery = new Post.Query();
+        //final ParseUser user = ParseUser.getCurrentUser();
+        postsQuery.getTop().withUser();
+
+
+        postsQuery.findInBackground(new FindCallback<Post>()
+
+        {
+            @Override
+            public void done(List<Post> objects, ParseException e) {
+                if (e == null) {
+                    for (int i = 0; i < objects.size(); i++) {
+                        if(objects.get(i).getUser().getUsername().equals(user.getUsername()) ) {
+                            Log.d("HomeActivity", "post[" + i + "]= " + objects.get(i).getDescription()
+                                    + "\nusername =" + objects.get(i).getUser().getUsername());
+                            mPosts.add(0, objects.get(i));
+                            instaAdapter.notifyItemInserted(mPosts.size() - 1);
+                        }
+                    }
+
+                    tvuserName.setText(user.getUsername());
+                    tvNumOfPosts.setText("Posts " + mPosts.size());
+
+                } else {
+                    e.printStackTrace();
+                }
+            }
+        });
+    }
+    public void fetchTimelineAsync(int page) {
+        instaAdapter.clear();
+        loadTopPosts();
+        //swipeContainer.setRefreshing(false);
     }
 
 

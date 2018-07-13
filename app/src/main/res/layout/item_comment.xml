@@ -7,16 +7,6 @@
     android:layout_height="wrap_content"
     android:layout_margin="10dp">
 
-    <TextView
-        android:id="@+id/tvUserName"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_toEndOf="@+id/ivProfilePic"
-        android:text="TextView"
-        tools:layout_editor_absoluteX="77dp"
-        tools:layout_editor_absoluteY="2dp" />
-
     <ImageView
         android:id="@+id/ivProfilePic"
         android:layout_width="30dp"
@@ -26,11 +16,20 @@
         app:srcCompat="@android:color/black" />
 
     <TextView
+        android:id="@+id/tvUserName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@id/ivProfilePic"
+        android:text="TextView"
+        android:textStyle="bold" />
+
+    <TextView
         android:id="@+id/tvComment"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignStart="@+id/tvUserName"
-        android:layout_below="@+id/tvUserName"
+        android:layout_alignParentTop="true"
+        android:layout_marginLeft="5dp"
+        android:layout_toEndOf="@+id/tvUserName"
         android:text="TextView" />
 
 </RelativeLayout>

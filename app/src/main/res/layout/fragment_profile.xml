@@ -3,45 +3,130 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".my_fragments.profile">
+
     <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context=".my_fragments.createPics">
 
-    <!-- TODO: Update blank fragment layout -->
+
+
+
+        <!-- TODO: Update blank fragment layout -->
 
         <Button
             android:id="@+id/btnLogout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentTop="true"
             android:text="Logout" />
 
         <Button
             android:id="@+id/btnTakeProfilePic"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_centerHorizontal="true"
-            android:layout_marginBottom="112dp"
+            android:layout_alignTop="@+id/btnEditProfile"
+            android:layout_toEndOf="@+id/tvNumOfPosts"
             android:text="take a Profile Pic" />
 
         <ImageView
             android:id="@+id/ivProfilePic"
-            android:layout_width="301dp"
-            android:layout_height="225dp"
+            android:layout_width="69dp"
+            android:layout_height="66dp"
+            android:layout_alignParentStart="true"
             android:layout_alignParentTop="true"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="58dp"
             android:src="@android:color/background_dark" />
+
         <Button
             android:id="@+id/btnUploadProfilePic"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_centerHorizontal="true"
-            android:layout_marginBottom="112dp"
+            android:layout_alignStart="@+id/btnTakeProfilePic"
+            android:layout_alignTop="@+id/btnEditProfile"
             android:text="Upload" />
+
+        <ImageView
+            android:id="@+id/ivActualProfilePic"
+            android:layout_width="69dp"
+            android:layout_height="62dp"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            app:srcCompat="@android:color/black" />
+
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rvProfilePosts"
+            android:layout_width="match_parent"
+            android:layout_height="300dp"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentStart="true"
+            android:layout_marginBottom="62dp" />
+
+        <TextView
+            android:id="@+id/tvNumOfPosts"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/btnLogout"
+            android:layout_toEndOf="@+id/ivProfilePic"
+            android:text="TextView"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/tvUserName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_toEndOf="@+id/ivProfilePic"
+            android:text="TextView"
+            android:textStyle="bold" />
+
+        <Button
+            android:id="@+id/btnEditProfile"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginTop="73dp"
+            android:text="Edit Profile" />
+
+        <Button
+            android:id="@+id/btnBio"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@+id/btnTakeProfilePic"
+            android:layout_toEndOf="@+id/btnTakeProfilePic"
+            android:text="EditBio" />
+
+        <EditText
+            android:id="@+id/etBio"
+            android:layout_width="164dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_alignStart="@+id/btnTakeProfilePic"
+            android:ems="10"
+            android:hint="bio"
+            android:inputType="textPersonName" />
+
+        <TextView
+            android:id="@+id/tvBio"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_toRightOf="@+id/tvUserName"
+            android:layout_marginLeft="5dp"
+            android:text="TextView" />
+
+        <Button
+            android:id="@+id/btnSendBio"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@+id/btnTakeProfilePic"
+            android:layout_toEndOf="@+id/btnTakeProfilePic"
+            android:text="UploadBio" />
+
 
     </RelativeLayout>
 

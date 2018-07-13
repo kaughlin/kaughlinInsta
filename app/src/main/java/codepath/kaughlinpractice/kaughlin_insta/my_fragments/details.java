@@ -40,6 +40,7 @@ public class details extends Fragment {
     public RecyclerView comments;
     public CommentAdapter commentAdapter;
     public ArrayList<Object> commentList;
+    //public RecyclerView rv
 
     @Nullable
     @Override
@@ -118,13 +119,17 @@ public class details extends Fragment {
                             etComment.setText("");
                             etComment.setVisibility(View.GONE);
                             btnSendComment.setVisibility(View.GONE);
+                            comments.setVisibility(View.VISIBLE);
                         }
                     });
 
                     ivClickToComment.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
+                            //rv.setVisibility(View.GONE);
+                            //btnSendComment.setVisibility(View.GONE);
 
+                            comments.setVisibility(View.INVISIBLE);
                             etComment.setVisibility(View.VISIBLE);
                             btnSendComment.setVisibility(View.VISIBLE);
                         }

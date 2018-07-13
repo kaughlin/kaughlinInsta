@@ -19,6 +19,7 @@ import java.util.List;
 public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ViewHolder> {
 
     private List<Object> mComments;
+    private TextView tvUserName;
     Context context;
 
     public CommentAdapter(List<Object> objects){ mComments = objects;}
@@ -53,7 +54,9 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ViewHold
 
 
 
-                    holder.tvComment.setText("@"+user.getUsername() + ": " + commentArray[1]);
+                    holder.tvUserName.setText(user.getUsername());
+
+                    holder.tvComment.setText(commentArray[1]);
                 }
 
             }

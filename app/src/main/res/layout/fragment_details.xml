@@ -8,8 +8,9 @@
 
     <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
-        android:layout_margin="5dp"
-        android:layout_width="match_parent" android:layout_height="match_parent">
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="5dp">
 
         <ImageView
             android:id="@+id/ivPostImage"
@@ -43,8 +44,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignTop="@+id/tvUserName"
-            android:layout_toEndOf="@+id/tvUserName"
             android:layout_marginLeft="5dp"
+            android:layout_toEndOf="@+id/tvUserName"
             android:text="TextView" />
 
         <ImageView
@@ -52,8 +53,8 @@
             android:layout_width="22dp"
             android:layout_height="22dp"
             android:layout_below="@+id/ivPostImage"
-            android:layout_toEndOf="@+id/ivLike"
             android:layout_marginLeft="15dp"
+            android:layout_toEndOf="@+id/ivLike"
             android:clickable="true"
             app:srcCompat="@drawable/ufi_comment" />
 
@@ -71,8 +72,8 @@
             android:layout_width="25dp"
             android:layout_height="25dp"
             android:layout_below="@+id/ivPostImage"
-            android:layout_toEndOf="@+id/ivComment"
             android:layout_marginLeft="15dp"
+            android:layout_toEndOf="@+id/ivComment"
             app:srcCompat="@drawable/ufi_new_direct" />
 
         <TextView
@@ -100,22 +101,21 @@
 
         <EditText
             android:id="@+id/etComment"
-            android:layout_width="wrap_content"
+            android:layout_width="309dp"
             android:layout_height="wrap_content"
-            android:layout_alignBaseline="@+id/tvUserName"
-            android:layout_toEndOf="@+id/tvDescription"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/tvTime"
             android:ems="10"
-            android:inputType="textPersonName"
-            android:text="Name" />
+            android:hint="Add a Comment"
+            android:inputType="textPersonName" />
 
         <Button
             android:id="@+id/btnSendComment"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="70dp"
+            android:layout_height="37dp"
             android:layout_alignParentEnd="true"
-            android:layout_alignParentTop="true"
-            android:layout_marginEnd="65dp"
-            android:text="Send Comment" />
+            android:layout_below="@+id/tvTime"
+            android:text="Post" />
 
 
     </RelativeLayout>
